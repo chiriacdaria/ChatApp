@@ -15,7 +15,7 @@ export default function Login() {
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "dark",
+    theme: "dark"
   };
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
@@ -45,7 +45,7 @@ export default function Login() {
       const { username, password } = values;
       const { data } = await axios.post(loginRoute, {
         username,
-        password,
+        password
       });
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
@@ -67,7 +67,7 @@ export default function Login() {
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            <h1>PingChat</h1>
           </div>
           <input
             type="text"
@@ -101,7 +101,7 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: #1abb9a;
   .brand {
     display: flex;
     align-items: center;
@@ -109,6 +109,7 @@ const FormContainer = styled.div`
     justify-content: center;
     img {
       height: 5rem;
+      filter: invert(1);
     }
     h1 {
       color: white;
@@ -127,18 +128,22 @@ const FormContainer = styled.div`
   input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid #0e604b;
     border-radius: 0.4rem;
     color: white;
     width: 100%;
     font-size: 1rem;
+
     &:focus {
-      border: 0.1rem solid #997af0;
+      border: 0.1rem solid #3ec5a0;
       outline: none;
     }
+
+    border-color: #083b2e;
   }
+
   button {
-    background-color: #4e0eff;
+    background-color: #1abb9a;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -148,14 +153,14 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: #3ec5a0;
     }
   }
   span {
     color: white;
     text-transform: uppercase;
     a {
-      color: #4e0eff;
+      color: #3ec5a0;
       text-decoration: none;
       font-weight: bold;
     }

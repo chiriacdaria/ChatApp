@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Buffer } from "buffer";
-import loader from "../assets/loader.gif";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { setAvatarRoute } from "../utils/APIRoutes";
+import loadingGif from "../assets/wait.gif";
+
 export default function SetAvatar() {
   const api = `https://api.multiavatar.com/4645646`;
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "dark",
+    theme: "dark"
   };
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(async () => {
     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))
@@ -35,7 +36,7 @@ export default function SetAvatar() {
       );
 
       const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
-        image: avatars[selectedAvatar],
+        image: avatars[selectedAvatar]
       });
 
       if (data.isSet) {
@@ -62,14 +63,16 @@ export default function SetAvatar() {
       data.push(buffer.toString("base64"));
     }
     setAvatars(data);
-    setIsLoading(false);
+    setLoading(false); // Set loading state to false after avatars are loaded
   }, []);
   return (
     <>
-      {isLoading ? (
-        <Container>
-          <img src={loader} alt="loader" className="loader" />
-        </Container>
+      {loading ? (
+        // Conditionally render the loading GIF or the avatars
+        <Loading>
+          <img src={loadingGif} alt="Loading" />
+          <p>Loading...</p> {/* Add loading text aligned to the center */}
+        </Loading>
       ) : (
         <Container>
           <div className="title-container">
@@ -102,20 +105,15 @@ export default function SetAvatar() {
     </>
   );
 }
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: #131324;
+  background-color: #051914;
   height: 100vh;
   width: 100vw;
-
-  .loader {
-    max-inline-size: 100%;
-  }
 
   .title-container {
     h1 {
@@ -140,11 +138,11 @@ const Container = styled.div`
       }
     }
     .selected {
-      border: 0.4rem solid #4e0eff;
+      border: 0.4rem solid #018262;
     }
   }
   .submit-btn {
-    background-color: #4e0eff;
+    background-color: #1d7a63;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -154,7 +152,26 @@ const Container = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: #018262;
     }
+  }
+`;
+
+const Loading = styled.div`
+  background-color: #051914;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+
+  img {
+    max-width: 100%;
+  }
+
+  p {
+    color: white;
+    margin-top: 1rem;
   }
 `;

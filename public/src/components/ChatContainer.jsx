@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
-import Logout from "./Logout";
+import { BiMessageX } from "react-icons/bi";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import Welcome from "../components/Welcome";
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(async () => {
     const data = await JSON.parse(
@@ -17,7 +19,7 @@ export default function ChatContainer({ currentChat, socket }) {
     );
     const response = await axios.post(recieveMessageRoute, {
       from: data._id,
-      to: currentChat._id,
+      to: currentChat._id
     });
     setMessages(response.data);
   }, [currentChat]);
@@ -28,6 +30,7 @@ export default function ChatContainer({ currentChat, socket }) {
         await JSON.parse(
           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
         )._id;
+        setShowWelcome(false); // Hide the welcome message
       }
     };
     getCurrentChat();
@@ -40,17 +43,17 @@ export default function ChatContainer({ currentChat, socket }) {
     socket.current.emit("send-msg", {
       to: currentChat._id,
       from: data._id,
-      msg,
+      msg
     });
     await axios.post(sendMessageRoute, {
       from: data._id,
       to: currentChat._id,
-      message: msg,
+      message: msg
     });
 
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
+    // Update the messages state
+    const newMessage = { fromSelf: true, message: msg };
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
   useEffect(() => {
@@ -71,38 +74,56 @@ export default function ChatContainer({ currentChat, socket }) {
 
   return (
     <Container>
-      <div className="chat-header">
-        <div className="user-details">
-          <div className="avatar">
-            <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            />
-          </div>
-          <div className="username">
-            <h3>{currentChat.username}</h3>
-          </div>
+      {showWelcome ? (
+        <div className="welcome-page">
+          <Welcome>
+            <h1>Welcome!</h1>
+            <p>Please select a chat to start messaging.</p>
+            <button onClick={() => setShowWelcome(false)}>
+              Go back to Chat
+            </button>
+          </Welcome>
         </div>
-        <Logout />
-      </div>
-      <div className="chat-messages">
-        {messages.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
-                }`}
-              >
-                <div className="content ">
-                  <p>{message.message}</p>
-                </div>
+      ) : (
+        <>
+          <div className="chat-header">
+            <div className="user-details">
+              <div className="avatar">
+                <img
+                  src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+                  alt=""
+                />
+              </div>
+              <div className="username">
+                <h3>{currentChat.username}</h3>
+              </div>
+              <div className="settings-icon">
+                <i className="fas fa-ellipsis-v"></i>
               </div>
             </div>
-          );
-        })}
-      </div>
-      <ChatInput handleSendMsg={handleSendMsg} />
+            <Button onClick={() => setShowWelcome(true)}>
+              <BiMessageX />
+            </Button>
+          </div>
+          <div className="chat-messages">
+            {messages.map((message) => (
+              <div ref={scrollRef} key={uuidv4()}>
+                <div
+                  className={`message ${
+                    message.fromSelf ? "sended" : "recieved"
+                  }`}
+                >
+                  <div className="content">
+                    <p>{message.message}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div ref={scrollRef}></div>
+          </div>
+          <ChatInput handleSendMsg={handleSendMsg} />
+        </>
+      )}
     </Container>
   );
 }
@@ -114,6 +135,10 @@ const Container = styled.div`
   overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
+  }
+  .welcome-page {
+    justify-items: center;
+    align-items: center;
   }
   .chat-header {
     display: flex;
@@ -168,14 +193,30 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: #4f04ff21;
+        background-color: #1a423a;
       }
     }
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: #9900ff20;
+        background-color: #1a423a;
       }
     }
+  }
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #1abb9a;
+  border: none;
+  cursor: pointer;
+  svg {
+    font-size: 1.3rem;
+    color: #ebe7ff;
+    filter: invert(1);
   }
 `;

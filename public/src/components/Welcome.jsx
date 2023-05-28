@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Robot from "../assets/robot.gif";
+import HiWave from "../assets/laphie.gif";
 export default function Welcome() {
   const [userName, setUserName] = useState("");
   useEffect(async () => {
@@ -12,7 +12,7 @@ export default function Welcome() {
   }, []);
   return (
     <Container>
-      <img src={Robot} alt="" />
+      <img src={HiWave} alt="" />
       <h1>
         Welcome, <span>{userName}!</span>
       </h1>
@@ -23,14 +23,14 @@ export default function Welcome() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   color: white;
   flex-direction: column;
   img {
-    height: 20rem;
+    height: 10rem; /* Adjust the height value as per your requirement */
   }
   span {
-    color: #4e0eff;
+    color: #0cf0b1;
   }
 `;

@@ -13,7 +13,7 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log("DB Connetion Successfull");
@@ -31,8 +31,8 @@ const server = app.listen(process.env.PORT, () =>
 const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
-    credentials: true,
-  },
+    credentials: true
+  }
 });
 
 global.onlineUsers = new Map();

@@ -30,7 +30,7 @@ module.exports.register = async (req, res, next) => {
     const user = await User.create({
       email,
       username,
-      password: hashedPassword,
+      password: hashedPassword
     });
     delete user.password;
     return res.json({ status: true, user });
@@ -45,7 +45,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "email",
       "username",
       "avatarImage",
-      "_id",
+      "_id"
     ]);
     return res.json(users);
   } catch (ex) {
@@ -61,13 +61,13 @@ module.exports.setAvatar = async (req, res, next) => {
       userId,
       {
         isAvatarImageSet: true,
-        avatarImage,
+        avatarImage
       },
       { new: true }
     );
     return res.json({
       isSet: userData.isAvatarImageSet,
-      image: userData.avatarImage,
+      image: userData.avatarImage
     });
   } catch (ex) {
     next(ex);
@@ -79,6 +79,35 @@ module.exports.logOut = (req, res, next) => {
     if (!req.params.id) return res.json({ msg: "User id is required " });
     onlineUsers.delete(req.params.id);
     return res.status(200).send();
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.updateName = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const { name } = req.body;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { username: name },
+      { new: true }
+    ).select(["email", "username", "name", "avatarImage", "_id"]);
+    if (!user) return res.json({ msg: "User not found", status: false });
+    return res.json({ status: true, user });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.deleteAccount = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.json({ msg: "User not found", status: false });
+    }
+    return res.json({ status: true, message: "User deleted successfully" });
   } catch (ex) {
     next(ex);
   }

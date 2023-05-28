@@ -7,6 +7,8 @@ import { allUsersRoute, host } from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+import Logout from "../components/Logout";
+import Header from "../components/HeaderContainer";
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ export default function Chat() {
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [showWelcomePage, setShowWelcomePage] = useState(true);
+
   useEffect(async () => {
     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/login");
@@ -25,6 +29,7 @@ export default function Chat() {
       );
     }
   }, []);
+
   useEffect(() => {
     if (currentUser) {
       socket.current = io(host);
@@ -42,38 +47,55 @@ export default function Chat() {
       }
     }
   }, [currentUser]);
+
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
+    setShowWelcomePage(chat === undefined);
   };
+  const showWelcomePageP = () => {
+    setShowWelcomePage(true);
+  };
+
   return (
-    <>
+    <div>
       <Container>
+        <Header />
         <div className="container">
-          <Contacts contacts={contacts} changeChat={handleChatChange} />
-          {currentChat === undefined ? (
+          <Contacts
+            contacts={contacts}
+            changeChat={handleChatChange}
+            showWelcomePageP={showWelcomePageP}
+          />
+          {showWelcomePage ? (
             <Welcome />
           ) : (
             <ChatContainer currentChat={currentChat} socket={socket} />
           )}
         </div>
       </Container>
-    </>
+    </div>
   );
 }
 
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: auto 1fr; /* Update the grid-template-rows property */
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: #051914;
+  .menu {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    background-color: #041310;
+  }
+
   .container {
-    height: 85vh;
-    width: 85vw;
-    background-color: #00000076;
+    height: 100%; /* Update the height to occupy the remaining space */
+    width: 100%; /* Update the width to occupy the remaining space */
+    background-color: #041310;
     display: grid;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
