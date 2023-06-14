@@ -1,10 +1,16 @@
+#ChatApp
+
 1.	INTRODUCERE
+   
 1.1	Contextul proiectului
+
 Ideea proiectului nostru este dezvoltarea unei aplicații de chat în JavaScript. În era digitală în care trăim, comunicarea este un element esențial și tot mai multe interacțiuni se desfășoară online. Aplicația noastră de chat vine în întâmpinarea nevoii de comunicare rapidă și eficientă între utilizatori. Relevanța acestui proiect se manifestă în mai multe moduri. 
 În primul rând, chat-ul este o modalitate de comunicare extrem de populară în mediul online, fiind folosit în diverse contexte, de la platforme sociale și aplicații de mesagerie până la asistență clienți și colaborare în echipă. O aplicație de chat bine dezvoltată și funcțională poate aduce beneficii semnificative în domenii precum servicii clienți, colaborare între echipe sau chiar în construirea comunităților online.
 În al doilea rând, alegerea tehnologiei JavaScript în dezvoltarea aplicației de chat a fost simplă, deoarece JavaScript este unul dintre cele mai populare limbaje de programare pentru dezvoltarea web. Acesta este suportat pe o gamă largă de dispozitive și platforme, permițând astfel utilizatorilor să acceseze și să folosească aplicația noastră de chat în diverse medii.
 Prin dezvoltarea acestei aplicații de chat în JavaScript, ne propunem să oferim o soluție simplă, ușor de utilizat și eficientă pentru comunicarea online. Ne dorim să aducem valoare utilizatorilor prin intermediul unei interfețe intuitive și a funcționalităților inovatoare. În acest fel, sperăm să îmbunătățim experiența de comunicare și să facilităm interacțiunile online într-un mod mai prietenos și mai eficient.
+
 1.2	Obiective 
+
 Aplicația noastră de chat în JavaScript are ca scop principal oferirea utilizatorilor unei modalități eficiente și prietenoase de a comunica online. Ne-am propus să rezolvăm nevoia de interacțiune în timp real, facilitând o experiență fluidă și plăcută utilizatorilor noștri. Obiectivele noastre au inclus îmbunătățirea experienței utilizatorilor prin intermediul unei interfețe intuitive și personalizabile, asigurarea unei comunicări rapide și eficiente, respectând în același timp securitatea și confidențialitatea datelor utilizatorilor. Am dezvoltat aplicația noastră astfel încât să fie adaptabilă la diverse medii și dispozitive, pentru a se potrivi nevoilor individuale ale utilizatorilor noștri. În ansamblu, aplicația noastră de chat în JavaScript aduce valoare prin îmbunătățirea experienței de comunicare online și facilitarea unei interacțiuni prietenoase și eficiente într-un domeniu tot mai digitalizat.
 
 1.3	Specificații și detalii principale
@@ -30,6 +36,8 @@ Aplicația noastră de chat în JavaScript are ca scop principal oferirea utiliz
 5. Bază de date: Pentru stocarea datelor, am utilizat MongoDB, iar pentru gestionarea acesteia, am folosit interfața Compass.
 
 6. Gestionarea cererilor HTTP: Pentru efectuarea cererilor între frontend și backend, am utilizat biblioteca Axios.
+
+   
 2.	DESCRIEREA APLICAȚIEI
 
 Aplicația noastră este o platformă de mesagerie online care permite utilizatorilor să se înregistreze și să comunice în timp real cu alte persoane. Aceasta oferă o interfață intuitivă și ușor de utilizat, cu funcționalități precum înregistrarea, autentificarea, setarea avatarului, gestionarea contactelor și schimbul de mesaje.
