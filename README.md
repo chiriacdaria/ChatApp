@@ -2,7 +2,7 @@ INTRODUCTION
 
 1.1 Project Context
 
-Our JavaScript chat application is designed to streamline online communication. It addresses the growing need for efficient interaction in digital spaces. Developed using React for the frontend and Node.js for the backend, the application prioritizes user experience, data security, and adaptability across devices.
+Our JavaScript chat application is designed to streamline online communication. It addresses the growing need for efficient interaction in digital spaces. Developed using React for the frontend and Express for the backend, the application prioritizes user experience, data security, and adaptability across devices.
 
 1.2 Objectives
 
